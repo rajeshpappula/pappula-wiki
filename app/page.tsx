@@ -1,69 +1,142 @@
 import Image from "next/image";
+import Link from "next/link";
+import type { Metadata } from "next";
+import { articles } from "@/lib/articles";
+
+export const metadata: Metadata = {
+  title: "A name. A place. A community.",
+  description:
+    "Explore the Pappula community and its shared connection to Pappulavaripalem, with source-linked articles and a careful record of what is not yet documented.",
+};
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
+    <div className="page-shell home-page">
+      <section className="hero" aria-labelledby="home-title">
+        <div className="hero-copy">
+          <div className="eyebrow">
+            <span className="eyebrow-dot" />
+            A community, connected
+          </div>
+          <h1 id="home-title">
+            A name. A place.
+            <br />
+            <em>Many journeys.</em>
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+          <p className="hero-description">
+            Pappula is a shared thread rooted in Pappulavaripalem and carried
+            by people who have made homes around the world. Begin with the
+            place, then explore the stories the sources can tell.
+            <a href="https://www.pappula.com/" aria-label="Source: Pappula community website">
+              {" "}
+              [1]
+            </a>
+          </p>
+          <div className="hero-actions">
+            <Link className="button-primary" href="/wiki/history">
+              Explore the history <span aria-hidden="true">→</span>
+            </Link>
+            <Link className="text-link" href="/wiki/pappulavaripalem">
+              Discover the village <span aria-hidden="true">↗</span>
+            </Link>
+          </div>
+        </div>
+        <div className="hero-art" aria-label="Decorative heritage illustration">
+          <Image
+            src="/heritage-motif.svg"
+            alt="Decorative botanical illustration, not a historical photograph"
+            width={320}
+            height={320}
+            priority
+          />
+          <span className="hero-art-label">A shared connection</span>
+        </div>
+      </section>
+
+      <section className="home-intro" aria-labelledby="intro-title">
+        <div>
+          <div className="eyebrow">
+            <span className="eyebrow-dot" />
+            Welcome to Pappula Wiki
+          </div>
+          <h2 className="section-heading" id="intro-title">
+            One name, many journeys. A connection that travels.
+          </h2>
+        </div>
+        <div className="intro-copy">
+          <p>
+            The Pappula community website describes Pappulavaripalem in Andhra
+            Pradesh as the place where the community&apos;s roots run deep. It
+            also speaks of people from the village settling across the world.
+            <a href="https://www.pappula.com/" aria-label="Source: Pappula community website">
+              {" "}
+              [1]
+            </a>
+          </p>
+          <p>
+            This wiki is a starting point for that shared story. It separates
+            what the published source says from what remains undocumented, so
+            that names, dates, and family relationships are never guessed.
+          </p>
+          <div className="source-note">
+            <strong>Source note.</strong> The available primary source is a
+            community introduction, not a detailed historical archive. Each
+            article links back to it and identifies where evidence is limited.
+          </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="articles-title">
+        <div className="collection-heading">
+          <div>
+            <div className="eyebrow">
+              <span className="eyebrow-dot" />
+              The knowledge collection
+            </div>
+            <h2 className="section-heading" id="articles-title">
+              Explore the articles
+            </h2>
+          </div>
+          <p>{articles.length} source-led articles</p>
+        </div>
+        <div className="article-grid">
+          {articles.map((article) => (
+            <Link
+              className="article-card"
+              href={`/wiki/${article.id}`}
+              key={article.id}
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+              <div className="card-topline">
+                <span className="card-category">{article.category}</span>
+                <span className="card-arrow" aria-hidden="true">
+                  ↗
+                </span>
+              </div>
+              <div>
+                <h3>{article.title}</h3>
+                <p>{article.summary}</p>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      <aside className="editorial-note">
+        <span className="editorial-icon" aria-hidden="true">
+          “
+        </span>
+        <div>
+          <strong>A living record, built with care</strong>
+          <p>
+            Family histories deserve accuracy. Every historical claim here
+            points to a source, and gaps are left open until they can be
+            responsibly filled.
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+        <Link className="text-link" href="/wiki/references">
+          Our sources <span aria-hidden="true">→</span>
+        </Link>
+      </aside>
     </div>
   );
 }
